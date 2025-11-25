@@ -12,6 +12,8 @@ import pandas as pd
 all_pr_df = pd.read_parquet("hf://datasets/hao-li/AIDev/all_pull_request.parquet")
 
 # Testing that all_pr_df is loaded correctly
-print(f"len(all_pr_df): {len(all_pr_df)}")
+#print(f"len(all_pr_df): {len(all_pr_df)}")
 
-#all_pr_df.to_csv("all_pull_requests.csv", index=False, quoting=csv.QUOTE_ALL)
+columns_to_keep = ['title', 'id', 'agent', 'body', 'repo_id', 'repo_url']
+
+all_pr_df.to_csv("all_pull_requests.csv", columns=columns_to_keep, index=False, quoting=csv.QUOTE_ALL)
