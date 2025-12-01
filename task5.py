@@ -78,6 +78,6 @@ final_df = merged[["ID", "AGENT", "TYPE", "CONFIDENCE", "SECURITY"]]
 # WRITE OUTPUT
 # ---------------------------
 output_file = "task_5_output.csv"
-#final_df.to_csv(output_file, index=False)
+final_df.to_csv(output_file, index=False)
 
 print(f"Task 5 Output saved to {output_file}")
