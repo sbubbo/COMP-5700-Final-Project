@@ -1,12 +1,26 @@
 README.md
 
 # Mining dataset AI Pull Requests
+'Task1.py': script to extract and process Pull Request data
+* TITLE: Data related to `title`
+* ID: Data related to `id`
+* AGENTNAME: Data related to `agent`
+* BODYSTRING: Data related to `body`
+* REPOID: Data related to `repo_id`
+* REPOURL: Data related to `repo_url`
 
 'Task2.py': script to extract and process Repository data
 * REPOID: Data related to `id`
 * LANG: Data related to `language`
 * STARS: Data related to `stars`
 * REPOURL: Data related to `url`
+
+'Task3.py': script to extract and process Task Type data
+* PRID: Data related to `id`
+* PRTITLE: Data related to `title`
+* PRREASON: Data related to `reason`
+* PRTYPE: Data related to `type`
+* CONFIDENCE: Data related to `confidence`
 
 'Task4.py': script to extract and process Commit Details
 * PRID: Data related to `pr_id`
@@ -21,7 +35,10 @@ README.md
 
 ## Install Requirements
 pip install pandas pyarrow huggingface_hub
+import csv
+import json
 
 ## Data source
 [hao-li/AIDev] (https://huggingface.co/datasets/hao-li/AIDev)
+Tables used for task 1 and 3: 'all_pull_requests', 'pr_task_type'
 Tables used for task 2 and 4: 'all_repository', 'pr_commit_details'
