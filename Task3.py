@@ -18,4 +18,4 @@ columns_to_keep = ['id', 'title', 'reason', 'type', 'confidence']
 task_2 = pr_task_type_df[columns_to_keep]
 task_2 = task_2.rename(columns={'id': 'PRID', 'title': 'PRTITLE', 'reason': 'PRREASON', 'type': 'PRTYPE', 'confidence': 'CONFIDENCE'})
 
-task_2.to_csv("pr_task_type.csv", index=False, quoting=csv.QUOTE_ALL)
+task_2.to_csv("task_3_output.csv", index=False, quoting=csv.QUOTE_ALL)

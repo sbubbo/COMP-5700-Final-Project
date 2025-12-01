@@ -19,4 +19,4 @@ columns_to_keep = ['title', 'id', 'agent', 'body', 'repo_id', 'repo_url']
 task_1 = all_pr_df[columns_to_keep]
 task_1 = task_1.rename(columns={'title': 'TITLE', 'id': 'ID', 'agent': 'AGENTNAME', 'body': 'BODYSTRING', 'repo_id': 'REPOID', 'repo_url': 'REPOURL'})
 
-task_1.to_csv("all_pull_requests.csv", index=False, quoting=csv.QUOTE_ALL)
+task_1.to_csv("task_1_output.csv", index=False, quoting=csv.QUOTE_ALL)
