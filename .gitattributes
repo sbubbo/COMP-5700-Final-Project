@@ -1,3 +1,4 @@
 all_pull_requests.csv filter=lfs diff=lfs merge=lfs -text
 .csv filter=lfs diff=lfs merge=lfs -text
 task_4_output.csv filter=lfs diff=lfs merge=lfs -text
+*.csv filter=lfs diff=lfs merge=lfs -text
