@@ -11,73 +11,77 @@
 #                    xsrf, forged, security, vulnerability, vulnerable, exploit, attack, bypass, backdoor, threat, expose, breach, violate, 
 #                    fatal, blacklist, overrun, and insecure.
 
-import csv
 import pandas as pd
-import os
 
-# --- Task 5 ---
+# Define the Security Keywords
+SECURITY_KEYWORDS = [
+    "race", "racy", "buffer", "overflow", "stack", 
+    "integer", "signedness", "underflow", "improper", "unauthenticated", "gain access", 
+    "permission", "cross site", "css", "xss", "denial service", "dos", "crash", "deadlock", 
+    "injection", "request forgery", "csrf", "xsrf", "forged", "security", "vulnerability", 
+    "vulnerable", "exploit", "attack", "bypass", "backdoor", "threat", "expose", "breach", 
+    "violate", "fatal", "blacklist", "overrun", "insecure"]
 
-security_keywords = [
-    "race", "racy", "buffer", "overflow", "stack", "integer", "signedness",
-    "underflow", "improper", "unauthenticated", "gain access", "permission",
-    "cross site", "css", "xss", "denial service", "dos", "crash", "deadlock",
-    "injection", "request forgery", "csrf", "xsrf", "forged", "security",
-    "vulnerability", "vulnerable", "exploit", "attack", "bypass", "backdoor",
-    "threat", "expose", "breach", "violate", "fatal", "blacklist", "overrun",
-    "insecure"
-]
-security_keywords = [kw.lower() for kw in security_keywords]
+def check_security(text):
+    """
+    Returns 1 if any keyword is found in the text, else 0.
+    Case insensitive.
+    """
+    if not isinstance(text, str):
+        return 0
+    
+    text_lower = text.lower()
+    for keyword in SECURITY_KEYWORDS:
+        if keyword.lower() in text_lower:
+            return 1
+    return 0
 
-# ---------------------------
-# LOAD RELEVANT CSV FILES
-# ---------------------------
-pulls = pd.read_csv("task_1_output.csv")         # TITLE, ID, AGENTNAME, BODYSTRING, ...
-types = pd.read_csv("task_3_output.csv")              # PRID, PRTITLE, PRREASON, PRTYPE, CONFIDENCE
+# Load the Data
+print("Loading data...")
 
-# ---------------------------
-# MERGE ON PR ID
-# ---------------------------
-merged = pulls.merge(
-    types,
-    left_on="ID",
-    right_on="PRID",
-    how="left"
+# We only need Task 1 (for Title/Body/Agent) and Task 3 (for Type/Confidence)
+# Task 2 and 4 don't have specific columns requested in Task 5
+df_task1 = pd.read_csv("task_1_output.csv")
+df_task3 = pd.read_csv("task_3_output.csv")
+
+# Merge the Dataframes
+print("Merging data...")
+
+# Task 1 uses 'ID' and Task 3 uses 'PRID' for the same identifier.
+# We merge on these columns.
+df_merged = pd.merge(
+    df_task1, 
+    df_task3, 
+    left_on='ID', 
+    right_on='PRID', 
+    how='inner' # Keep only records that exist in both
 )
 
-# ---------------------------
-# FUNCTION FOR SECURITY CHECK
-# ---------------------------
-def has_security_keyword(title, body):
-    text = f"{str(title)} {str(body)}".lower()
-    return 1 if any(kw in text for kw in security_keywords) else 0
+# Create the 'SECURITY' Column
+print("Analyzing keywods...")
 
-# ---------------------------
-# APPLY SECURITY FLAG
-# ---------------------------
-merged["SECURITY"] = merged.apply(
-    lambda row: has_security_keyword(row["TITLE"], row["BODYSTRING"]),
+# Check both TITLE and BODYSTRING
+# Use apply() to run our check_security function row by row
+df_merged['SECURITY'] = df_merged.apply(
+    lambda row: 1 if (check_security(row['TITLE']) == 1 or check_security(row['BODYSTRING']) == 1) else 0,
     axis=1
 )
 
-# ---------------------------
-# RENAME COLUMNS FOR FINAL OUTPUT
-# ---------------------------
-merged.rename(columns={
-    "ID": "ID",
-    "AGENTNAME": "AGENT",
-    "PRTYPE": "TYPE",
-    "CONFIDENCE": "CONFIDENCE"
-}, inplace=True)
+# Format the Final Output
+# Rename columns to match the requirement exactly
+# Requirement: ID, AGENT, TYPE, CONFIDENCE, SECURITY
+df_final = df_merged.rename(columns={
+    'ID': 'ID',
+    'AGENTNAME': 'AGENT',
+    'PRTYPE': 'TYPE',
+    'CONFIDENCE': 'CONFIDENCE'
+    # SECURITY is already named SECURITY
+})
 
-# ---------------------------
-# CHOOSE ONLY FINAL COLUMNS
-# ---------------------------
-final_df = merged[["ID", "AGENT", "TYPE", "CONFIDENCE", "SECURITY"]]
+# Select only the required columns
+df_final_output = df_final[['ID', 'AGENT', 'TYPE', 'CONFIDENCE', 'SECURITY']]
 
-# ---------------------------
-# WRITE OUTPUT
-# ---------------------------
-output_file = "task_5_output.csv"
-final_df.to_csv(output_file, index=False)
+output_filename = "task_5_output.csv"
+df_final_output.to_csv(output_filename, index=False)
 
-print(f"Task 5 Output saved to {output_file}")
+print(f"Task 5 complete.")
