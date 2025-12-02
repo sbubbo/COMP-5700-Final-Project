@@ -26,7 +26,7 @@ def check_security(text):
 # Load the Data
 print("Loading data...")
 
-# We only need Task 1 (for Title/Body/Agent) and Task 3 (for Type/Confidence)
+# Only need Task 1 (for Title/Body/Agent) and Task 3 (for Type/Confidence)
 # Task 2 and 4 don't have specific columns requested in Task 5
 df_task1 = pd.read_csv("task_1_output.csv")
 df_task3 = pd.read_csv("task_3_output.csv")
@@ -35,7 +35,7 @@ df_task3 = pd.read_csv("task_3_output.csv")
 print("Merging data...")
 
 # Task 1 uses 'ID' and Task 3 uses 'PRID' for the same identifier.
-# We merge on these columns.
+# Merge on these columns.
 df_merged = pd.merge(
     df_task1, 
     df_task3, 
@@ -45,7 +45,7 @@ df_merged = pd.merge(
 )
 
 # Create the 'SECURITY' Column
-print("Analyzing keywods...")
+print("Analyzing keywords...")
 
 # Check both TITLE and BODYSTRING
 # Use apply() to run our check_security function row by row
