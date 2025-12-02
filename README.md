@@ -34,11 +34,12 @@ README.md
 * PRDIFF: Data related to `patch`. Please remove special characters in the diff to avoid string encoding errors. 
 
 ## Install Requirements
-pip install pandas pyarrow huggingface_hub
-import csv
-import json
+pip install pandas pyarrow huggingface_hub<br>import csv<br>import json
 
 ## Data source
-[hao-li/AIDev] (https://huggingface.co/datasets/hao-li/AIDev)
-Tables used for task 1 and 3: 'all_pull_requests', 'pr_task_type'
-Tables used for task 2 and 4: 'all_repository', 'pr_commit_details'
+[hao-li/AIDev] (https://huggingface.co/datasets/hao-li/AIDev)<br>Tables used for task 1 and 3: 'all_pull_requests', 'pr_task_type'<br>Tables used for task 2 and 4: 'all_repository', 'pr_commit_details'
+
+## Tasks assignment
+Task 1 & 3 are done by Sarabeth Shannon<br>
+Task 2 & 4 are done by An Dinh<br>
+Both attempted to do task 5 and agreed to use An's source code
